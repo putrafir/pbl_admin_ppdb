@@ -1,0 +1,30 @@
+.active {
+  color: #3b82f6;
+}
+
+.line {
+  top: 42px;
+  left: 69px;
+  width: 43px;
+  height: 5px;
+}
+
+.kontenBox .konten {
+  display: none;
+  animation: moving 0.5s ease;
+}
+
+@keyframes moving {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+.kontenBox .konten.active {
+  display: block;
+}

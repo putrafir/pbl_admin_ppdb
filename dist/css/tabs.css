@@ -1,0 +1,29 @@
+#button.active {
+  color: #3b82f6;
+}
+
+.line {
+  top: 55px;
+  left: 24px;
+  width: 121px;
+  height: 4px;
+}
+
+.contentBox .content {
+  display: none;
+  animation: moving 0.5s ease;
+}
+@keyframes moving {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+.contentBox .content.active {
+  display: block;
+}

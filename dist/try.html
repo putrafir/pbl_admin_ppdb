@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/tab.css" />
+  </head>
+  <body class="flex justify-center items-center">
+    <!-- <div class="container mt-4 max-w-lg bg-white shadow-lg p-[30px] rounded-lg">
+      <div
+        class="relative flex gap-12 items-center justify-center w-full opacity-50"
+      >
+        <button id="button" class="active">Home</button>
+        <button id="button">About</button>
+        <button id="button">Blog</button>
+        <button id="button">Kontak us</button>
+        <div
+          class="line absolute bg-blueFist rounded-full transition-all duration-300 ease-in-out"
+        ></div>
+      </div>
+      <hr class="mt-5 pb-4" />
+      <div class="kontenBox">
+        <div class="konten active">
+          <h2 class="text-xl font-bold pb-2">Home</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quos
+            impedit cupclassitate aperiam consequuntur repudiandae ipsam minima
+            enim excepturi suscipit!
+          </p>
+        </div>
+        <div class="konten">
+          <h2 class="text-xl font-bold pb-2">About</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quos
+            impedit cupclassitate aperiam consequuntur repudiandae ipsam minima
+            enim excepturi suscipit!
+          </p>
+        </div>
+        <div class="konten">
+          <h2 class="text-xl font-bold pb-2">Blog</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quos
+            impedit cupclassitate aperiam consequuntur repudiandae ipsam minima
+            enim excepturi suscipit!
+          </p>
+        </div>
+        <div class="konten">
+          <h2 class="text-xl pb-2 font-bold">Kontak</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quos
+            impedit cupiditate aperiam consequuntur repudiandae ipsam minima
+            enim excepturi suscipit!
+          </p>
+        </div>
+      </div>
+    </div> -->
+
+    <form action="halamanlain.html">
+      <input type="text" name="nama" />
+      <button type="submit">Kirim</button>
+    </form>
+
+    <script>
+      // Mendapatkan parameter dari URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const nama = urlParams.get("nama");
+
+      // Lakukan sesuatu dengan nilai yang diperoleh, contoh menampilkannya di konsol
+      console.log(nama); // Output: Nilam
+    </script>
+    <!-- <script>
+      const tabs = document.querySelectorAll("#button");
+      const allKonten = document.querySelectorAll(".konten");
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", (e) => {
+          tabs.forEach((tab) => {
+            tab.classList.remove("active");
+          });
+          tab.classList.add("active");
+
+          var line = document.querySelector(".line");
+          line.style.width = e.target.offsetWidth + "px";
+          line.style.left = e.target.offsetLeft + "px";
+
+          allKonten.forEach((konten) => {
+            konten.classList.remove("active");
+          });
+          allKonten[index].classList.add("active");
+        });
+      });
+    </script> -->
+  </body>
+</html>
