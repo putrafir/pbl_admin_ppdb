@@ -13,14 +13,18 @@ if (isset($_POST['upload'])) {
   $provinsi = $_POST['provinsi'];
   $telepon = $_POST['telepon'];
 
+  // $namaAyah = $_POST['namaAyah'];
+  // $nikAyah = $_POST['nikAyah'];
+  // $pekerjaanAyah = $_POST['pekerjaanAyah'];
+  // $teleponAyah = $_POST['teleponAyah'];
+  // $alamatAyah = $_POST['alamatAyah'];
+  // $usiaAyah = $_POST['usiaAyah'];
+  // $profil = $_POST['profil'];
 
-
-  $sql = "INSERT INTO data_diri (namaLengkap, jenisKelamin, tanggalLahir, alamat, kota, nisn, tempatLahir, agama, provinsi, telepon) VALUES ('$namaLengkap','$jenisKelamin','$tanggalLahir','$alamat','$kota', '$nisn','$tempatLahir','$agama','$provinsi','$telepon')";
+  $sql = "INSERT INTO data_diri (namaLengkap,jenisKelamin,tanggalLahir,alamat,kota,nisn,tempatLahir,agama,provinsi,telepon) VALUES ('$namaLengkap','$jenisKelamin','$tanggalLahir','$alamat','$kota','$nisn','$tempatLahir','$agama','$provinsi','$telepon')";
 
   if ($db->query($sql)) {
-    echo "oke mantap data ,asuk";
-  } else {
-    echo "data gagal masuk";
+    echo "berhasil";
   }
 }
 ?>
@@ -196,12 +200,14 @@ if (isset($_POST['upload'])) {
             </div>
 
             <div class="group">
-              <button id="myButton" onclick="changeColor()" type="button" class="px-3 py-2 h-10 text-xs font-medium text-center inline-flex items-center text-dark bg-dark bg-opacity-10 rounded-xl">
+
+              <button id="myButton" onclick="changeColor()" type="submit" class="px-3 py-2 h-10 text-xs font-medium text-center inline-flex items-center text-dark bg-dark bg-opacity-10 rounded-xl">
                 <svg id="myIcon" class="fill-dark" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path id="myPath" fill-rule="evenodd" clip-rule="evenodd" d="M18.0096 7.75789C18.4001 8.14841 18.4001 8.78158 18.0096 9.1721L10.9396 16.2421C10.7521 16.4296 10.4977 16.535 10.2325 16.535C9.96729 16.535 9.71294 16.4296 9.5254 16.2421L5.9904 12.7071C5.59988 12.3166 5.59988 11.6834 5.9904 11.2929C6.38093 10.9024 7.01409 10.9024 7.40462 11.2929L10.2325 14.1208L16.5954 7.75789C16.9859 7.36737 17.6191 7.36737 18.0096 7.75789Z" />
                 </svg>
                 <span id="myButtonText"> Tambah </span>
               </button>
+
             </div>
           </div>
         </div>
@@ -220,11 +226,11 @@ if (isset($_POST['upload'])) {
         <hr class="pb-4 border-t-2 border-secondary opacity-25" />
         <div class="contentBox px-6">
           <div class="content text-dark active">
-            <form class="max-w-sm mt-6 pb-7" action="./tambah-pendaftar.php" method="POST">
+            <form class="max-w-sm mt-6 pb-7" method="POST" id="form1">
               <div class="grid-cols-2 w-[60rem] grid gap-x-20">
                 <div class="mb-5">
                   <label for="nama" class="block mb-2 text-sm font-medium">Nama lengkap</label>
-                  <input id="nama" name="namaLengkap" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input id="nama" type="text" name="namaLengkap" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="mb-5">
                   <label for="gender" class="block mb-2 text-sm font-medium">Jenis kelamin</label>
@@ -262,70 +268,72 @@ if (isset($_POST['upload'])) {
                 <div class="mb-5">
                   <label for="telepon" class="block mb-2 text-sm font-medium">Telepon</label>
                   <input name="telepon" type="telepon" id="telepon" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <button name="upload" type="submit" class="block mt-6 mx-[40%] text-white bg-blueFist hover:bg-bluSecond focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                    Upload
+                  </button>
+
                 </div>
               </div>
-              <button name="upload" type="submit" class="block mt-6 mx-[40%] text-white bg-blueFist hover:bg-bluSecond focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                Upload
-              </button>
-
             </form>
           </div>
           <div class="content text-dark">
-            <form class="max-w-sm mt-6 pb-2">
+            <div class="max-w-sm mt-6 pb-2" method="POST">
               <div class="grid-cols-2 w-[60rem] grid gap-x-20">
                 <div class="mb-5">
                   <label for="nama" class="block mb-2 text-sm font-medium">Nama ayah</label>
-                  <input id="nama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                  <input name="namaAyah" type="text" id="nama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                 </div>
                 <div class="mb-5">
                   <label for="gender" class="block mb-2 text-sm font-medium">NIK ayah</label>
-                  <input type="gender" id="gender" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input name="nikAyah" type="text" id="gender" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="mb-5">
                   <label for="tanggalLahir" class="block mb-2 text-sm font-medium">Pekerjaan ayah</label>
-                  <input type="tanggalLahir" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input name="pekerjaanAyah" type="tanggalLahir" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="mb-5">
                   <label for="alamat" class="block mb-2 text-sm font-medium">Telepon ayah</label>
-                  <input type="alamat" id="alamat" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input name="teleponAyah" type="text" id="alamat" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="mb-5">
                   <label for="repeat-password" class="block mb-2 text-sm font-medium">Alamat ayah</label>
-                  <input type="password" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input name="alamatAyah" type="text" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="mb-5">
                   <label for="password" class="block mb-2 text-sm font-medium">Usia</label>
-                  <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input name="usiaAyah" type="text " class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="mb-5">
                   <label for="tempatLahir" class="block mb-2 text-sm font-medium">Nama ibu</label>
-                  <input type="tempatLahir" id="tempatLahir" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input name="namaIbu" type="text" id="tempatLahir" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="mb-5">
                   <label for="agama" class="block mb-2 text-sm font-medium">NIK ibu</label>
-                  <input type="agama" id="agama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input name="nikIbu" type="text" id="agama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="mb-5">
                   <label for="provinsi" class="block mb-2 text-sm font-medium">Pekerjaan ibu</label>
-                  <input type="provinsi" id="provinsi" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input name="pekerjaanIbu" type="text" id="provinsi" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="mb-5">
                   <label for="telepon" class="block mb-2 text-sm font-medium">Telepon ibu</label>
-                  <input type="telepon" id="telepon" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input name="teleponIbu" type="text" id="telepon" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="mb-5">
                   <label for="provinsi" class="block mb-2 text-sm font-medium">Alamat ibu</label>
-                  <input type="provinsi" id="provinsi" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input name="alamatIbu" type="provinsi" id="provinsi" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="mb-5">
                   <label for="telepon" class="block mb-2 text-sm font-medium">Usia</label>
-                  <input type="telepon" id="telepon" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input name="usiaIbu" type="text" id="telepon" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+
                 </div>
+
               </div>
-            </form>
+            </div>
           </div>
           <div class="content text-dark">
-            <form class="max-w-sm mt-6 pb-2">
+            <div class="max-w-sm mt-6 pb-2">
               <div class="grid-cols-2 w-[60rem] grid gap-x-20">
                 <div class="mb-5">
                   <label for="nama" class="block mb-2 text-sm font-medium">Provinsi SMP</label>
@@ -344,8 +352,10 @@ if (isset($_POST['upload'])) {
                   <input type="alamat" id="alamat" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
               </div>
-            </form>
+            </div>
           </div>
+
+          </form>
           <div class="content ml-4 text-dark">
             <div class="pt-4">
               <label class="block mb-2 text-sm font-medium text-gray-900" for="file_input">IJAZAH/SKL SMP</label>
@@ -376,36 +386,9 @@ if (isset($_POST['upload'])) {
               </div>
             </div>
 
-            <button id="upload-button" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="block mt-6 mx-[40%] text-white bg-blueFist hover:bg-bluSecond focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-              Upload
-            </button>
 
-            <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-              <div class="relative p-4 w-full max-w-md max-h-full">
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                  <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent" data-modal-hide="popup-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                  </button>
-                  <div class="p-4 md:p-5 text-center">
-                    <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                      Apa kamu yakin untuk mengupliad file ini?
-                    </h3>
-                    <button data-modal-hide="popup-modal" type="button" class="text-white bg-green-400 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-red-300font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
-                      Iya
-                    </button>
-                    <button data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                      Tidak
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+
 
             <div class="pb-6"></div>
           </div>

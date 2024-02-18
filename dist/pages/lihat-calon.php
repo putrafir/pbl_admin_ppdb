@@ -151,28 +151,26 @@
         // Langkah 1: Sambungkan ke database
         include "../../service/database.php";
         // Query untuk mengambil data dari database
-        $query = "SELECT namaLengkap, nisn, jenisKelamin, alamat FROM data_diri";
+        $query = "SELECT * FROM data_diri";
+        $query_run = mysqli_query($db, $query);
 
-        $result = $db->query($query);
-
-        if ($result->num_rows > 0) {
-          // Loop melalui setiap baris hasil query
-          while ($row = $result->fetch_assoc()) {
-            // Mengatur nilai dari elemen <h2> sesuai dengan data dari database
+        if (mysqli_num_rows($query_run) > 0) {
+          foreach ($query_run as $data_diri) {
         ?>
+
             <div class="grid grid-cols-6">
               <div class=" w-[65rem] h-[70px] flex flex-wrap bg-white shadow-sm mt-3 mx-6 rounded-xl border">
                 <img src="../../img/profil/gua.pdf" alt="profil" class="w-[66px] py-2 px-2" />
                 <h2 class="font-semibold pl-4 text-dark mt-6">
-                  <?php echo $row['namaLengkap']; ?>
+                  <?= $data_diri['namaLengkap']; ?>
                 </h2>
                 <div class="pt-6 flex absolute pl-60">
-                  <h2 class="pl-[116px] text-sm text-slate-400"><?php echo $row['nisn']; ?></h2>
-                  <h2 class="pl-[4rem] text-sm text-slate-400"><?php echo $row['jenisKelamin']; ?></h2>
-                  <h2 class="pl-[4rem] text-sm text-slate-400"><?php echo $row['alamat']; ?></h2>
+                  <h2 class="pl-[116px] text-sm text-slate-400"><?= $data_diri['nisn']; ?></h2>
+                  <h2 class="pl-[4rem] text-sm text-slate-400"><?= $data_diri['jenisKelamin']; ?></h2>
+                  <h2 class="pl-[4rem] text-sm text-slate-400"><?= $data_diri['alamat']; ?></h2>
                 </div>
 
-                <a class="-mt-12" href="button/lihat.php">
+                <a class="-mt-12" href="button/lihat.php?id=<?= $data_diri['id']; ?>">
                   <button name="lihat" type="submit" class="text-white h-7  bg-blueFist font-medium rounded-full text-[10px] px-5 ml-[946px] me-2 hover:bg-bluSecond">
                     Lihat
                   </button>
@@ -180,10 +178,11 @@
                 </a>
               </div>
             </div>
+
         <?php
           }
         } else {
-          echo "Data tidak ditemukan";
+          echo "no record found";
         }
         ?>
       </div>

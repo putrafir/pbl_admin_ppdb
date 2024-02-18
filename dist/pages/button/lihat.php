@@ -1,7 +1,5 @@
 <?php
-session_start();
-
-$nama = $_SESSION['nama'];
+require '../../../service/database.php'
 ?>
 
 <!DOCTYPE html>
@@ -57,7 +55,7 @@ $nama = $_SESSION['nama'];
       </a>
 
       <!-- lihat calon -->
-      <a href="../lihat-calon.html">
+      <a href="../lihat-calon.php">
         <div class="p-4 flex items-center rounded-lg px-8 duration-300 cursor-pointer bg-blueFist bg-opacity-35 text-white">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9.25 21.25C7.04086 21.25 5.25 19.4591 5.25 17.25V6.75C5.25 4.54086 7.04086 2.75 9.25 2.75H16.25C18.4591 2.75 20.25 4.54086 20.25 6.75V17.25C20.25 19.4591 18.4591 21.25 16.25 21.25H9.25Z" stroke="#1068FF" stroke-width="1.5" stroke-linecap="round" />
@@ -92,15 +90,17 @@ $nama = $_SESSION['nama'];
         </svg>
         <span class="text-gray-600 ml-[24px] text-base text-sm">Ukuran baju</span>
       </div>
-      <div class="p-4 flex items-center rounded-lg px-8 duration-300 cursor-pointer hover:bg-blueFist hover:bg-opacity-35 text-white">
-        <svg width="24" height="24" class="ml-[1px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2.75 6.75C2.75 4.54086 4.54086 2.75 6.75 2.75H17.25C19.4591 2.75 21.25 4.54086 21.25 6.75V13.75C21.25 15.9591 19.4591 17.75 17.25 17.75H6.75C4.54086 17.75 2.75 15.9591 2.75 13.75V6.75Z" stroke="#1068FF" stroke-width="1.5" stroke-linecap="round" />
-          <path d="M7 21.25H17" stroke="#1068FF" stroke-width="1.5" stroke-linecap="round" />
-          <path d="M2.75 13.25H21.25" stroke="#1068FF" stroke-width="1.5" stroke-linecap="round" />
-          <path d="M10 17.75L9 21.25M14 17.75L15 21.25" stroke="#1068FF" stroke-width="1.5" stroke-linecap="round" />
-        </svg>
-        <span class="text-gray-600 ml-5 text-base text-sm">Tambah pendaftar</span>
-      </div>
+      <a href="../tambah-pendaftar.php">
+        <div class="p-4 flex items-center rounded-lg px-8 duration-300 cursor-pointer hover:bg-blueFist hover:bg-opacity-35 text-white">
+          <svg width="24" height="24" class="ml-[1px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.75 6.75C2.75 4.54086 4.54086 2.75 6.75 2.75H17.25C19.4591 2.75 21.25 4.54086 21.25 6.75V13.75C21.25 15.9591 19.4591 17.75 17.25 17.75H6.75C4.54086 17.75 2.75 15.9591 2.75 13.75V6.75Z" stroke="#1068FF" stroke-width="1.5" stroke-linecap="round" />
+            <path d="M7 21.25H17" stroke="#1068FF" stroke-width="1.5" stroke-linecap="round" />
+            <path d="M2.75 13.25H21.25" stroke="#1068FF" stroke-width="1.5" stroke-linecap="round" />
+            <path d="M10 17.75L9 21.25M14 17.75L15 21.25" stroke="#1068FF" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          <span class="text-gray-600 ml-5 text-base text-sm">Tambah pendaftar</span>
+        </div>
+      </a>
     </aside>
 
     <!-- Side samping end -->
@@ -140,213 +140,232 @@ $nama = $_SESSION['nama'];
       </div>
     </div>
 
-    <!-- profile konten -->
-    <div class="flex flex-col w-[68rem]">
-      <div class="h-[6rem] mt-8 bg-white shadow-lg rounded-2xl">
-        <div class="py-[13px] px-[13px] flex">
-          <img src="../../../img/profil/gua.pdf" class="" alt="profile" />
-          <div class="py-3 pl-[1rem] text-dark">
-            <h5 class="font-semibold pb-1"><?php
-                                            echo $nama;
-                                            ?></h5>
-            <p class="text-[12px]">firdausputra0212@gmail.com</p>
+    <?php
+
+    if (isset($_GET['id'])) {
+      $data_diri_id = mysqli_real_escape_string($db, $_GET['id']);
+      $query = "SELECT * FROM data_diri WHERE id='$data_diri_id'";
+      $query_run = mysqli_query($db, $query);
+
+      if (mysqli_num_rows($query_run) > 0) {
+        $data_diri = mysqli_fetch_array($query_run) ?>
+
+        <!-- profile konten -->
+        <div class="flex flex-col w-[68rem]">
+          <div class="h-[6rem] mt-8 bg-white shadow-lg rounded-2xl">
+            <div class="py-[13px] px-[13px] flex">
+              <img src="../../../img/profil/gua.pdf" class="" alt="profile" />
+              <div class="py-3 pl-[1rem] text-dark">
+                <h5 class="font-semibold pb-1"><?= $data_diri['namaLengkap']
+                                                ?></h5>
+                <p class="text-[12px]">firdausputra0212@gmail.com</p>
+              </div>
+              <div class="absolute end-12 py-[16px] flex gap-1">
+                <div class="group">
+                  <button id="tolak" onclick="changeColor1()" type="button" class="px-3 py-2 h-10 text-xs font-medium text-center inline-flex items-center text-dark bg-dark bg-opacity-10 rounded-xl">
+                    <svg id="tolakIcon" class="fill-dark" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path id="pathTolak" fill-rule="evenodd" clip-rule="evenodd" d="M16.2426 7.75736C16.6332 8.14788 16.6332 8.78104 16.2426 9.17157L13.4142 12L16.2426 14.8284C16.6332 15.2189 16.6332 15.8521 16.2426 16.2426C15.8521 16.6332 15.219 16.6332 14.8284 16.2426L12 13.4142L9.17157 16.2426C8.78105 16.6332 8.14788 16.6332 7.75736 16.2426C7.36684 15.8521 7.36684 15.2189 7.75736 14.8284L10.5858 12L7.75736 9.17157C7.36684 8.78105 7.36684 8.14788 7.75736 7.75736C8.14788 7.36683 8.78105 7.36683 9.17157 7.75736L12 10.5858L14.8284 7.75736C15.219 7.36683 15.8521 7.36683 16.2426 7.75736Z" />
+                    </svg>
+                    <span id="buttonTolak"> Tolak </span>
+                  </button>
+                </div>
+
+                <div class="group">
+                  <button id="myButton" onclick="changeColor()" type="button" class="px-3 py-2 h-10 text-xs font-medium text-center inline-flex items-center text-dark bg-dark bg-opacity-10 rounded-xl">
+                    <svg id="myIcon" class="fill-dark" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path id="myPath" fill-rule="evenodd" clip-rule="evenodd" d="M18.0096 7.75789C18.4001 8.14841 18.4001 8.78158 18.0096 9.1721L10.9396 16.2421C10.7521 16.4296 10.4977 16.535 10.2325 16.535C9.96729 16.535 9.71294 16.4296 9.5254 16.2421L5.9904 12.7071C5.59988 12.3166 5.59988 11.6834 5.9904 11.2929C6.38093 10.9024 7.01409 10.9024 7.40462 11.2929L10.2325 14.1208L16.5954 7.75789C16.9859 7.36737 17.6191 7.36737 18.0096 7.75789Z" />
+                    </svg>
+                    <span id="myButtonText"> Terima </span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="absolute end-12 py-[16px] flex gap-1">
-            <div class="group">
-              <button id="tolak" onclick="changeColor1()" type="button" class="px-3 py-2 h-10 text-xs font-medium text-center inline-flex items-center text-dark bg-dark bg-opacity-10 rounded-xl">
-                <svg id="tolakIcon" class="fill-dark" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path id="pathTolak" fill-rule="evenodd" clip-rule="evenodd" d="M16.2426 7.75736C16.6332 8.14788 16.6332 8.78104 16.2426 9.17157L13.4142 12L16.2426 14.8284C16.6332 15.2189 16.6332 15.8521 16.2426 16.2426C15.8521 16.6332 15.219 16.6332 14.8284 16.2426L12 13.4142L9.17157 16.2426C8.78105 16.6332 8.14788 16.6332 7.75736 16.2426C7.36684 15.8521 7.36684 15.2189 7.75736 14.8284L10.5858 12L7.75736 9.17157C7.36684 8.78105 7.36684 8.14788 7.75736 7.75736C8.14788 7.36683 8.78105 7.36683 9.17157 7.75736L12 10.5858L14.8284 7.75736C15.219 7.36683 15.8521 7.36683 16.2426 7.75736Z" />
-                </svg>
-                <span id="buttonTolak"> Tolak </span>
-              </button>
+        </div>
+
+        <div class="container pt-6">
+          <div class="bg-white w-[68rem] shadow-lg rounded-xl">
+            <div class="flex font-semibold relative text-secondary gap-12 w-full py-4 px-6">
+              <button id="button" class="active">Data Diri Calon</button>
+              <button id="button">Data Orang Tua</button>
+              <button id="button">Asal Sekolah</button>
+              <button id="button">Berkas</button>
+              <div class="line absolute bg-blueFist rounded-full transition-all duration-300 ease-in-out"></div>
+            </div>
+            <hr class="pb-4 border-t-2 border-secondary opacity-25" />
+            <div class="contentBox px-6">
+              <div class="content text-dark active">
+                <form class="max-w-sm mt-6 pb-7">
+                  <div class="grid-cols-2 w-[60rem] grid gap-x-20">
+                    <div class="mb-5">
+                      <label for="nama" class="block mb-2 text-sm font-medium">Nama lengkap</label>
+                      <h5 class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"><?= $data_diri['namaLengkap'] ?></h5>
+                    </div>
+                    <div class="mb-5">
+                      <label for="gender" class="block mb-2 text-sm font-medium">Jenis kelamin</label>
+                      <h5 type="gender" id="gender" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"> <?= $data_diri['jenisKelamin'] ?></h5>
+                    </div>
+                    <div class="mb-5">
+                      <label for="tanggalLahir" class="block mb-2 text-sm font-medium">Tanggal lahir</label>
+                      <h5 type="tanggalLahir" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"><?= $data_diri['tanggalLahir'] ?></h5>
+                    </div>
+                    <div class="mb-5">
+                      <label for="alamat" class="block mb-2 text-sm font-medium">Alamat</label>
+                      <h5 type="alamat" id="alamat" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"><?= $data_diri['alamat'] ?></h5>
+                    </div>
+                    <div class="mb-5">
+                      <label for="repeat-password" class="block mb-2 text-sm font-medium">Kota/kabupaten</label>
+                      <h5 type="password" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"><?= $data_diri['kota'] ?></h5>
+                    </div>
+                    <div class="mb-5">
+                      <label for="password" class="block mb-2 text-sm font-medium">NISN</label>
+                      <h5 type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"><?= $data_diri['nisn'] ?></h5>
+                    </div>
+                    <div class="mb-5">
+                      <label for="tempatLahir" class="block mb-2 text-sm font-medium">Tempat lahir</label>
+                      <h5 type="tempatLahir" id="tempatLahir" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"><?= $data_diri['tempatLahir'] ?></h5>
+                    </div>
+                    <div class="mb-5">
+                      <label for="agama" class="block mb-2 text-sm font-medium">Agama</label>
+                      <h5 type="agama" id="agama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"><?= $data_diri['agama'] ?></h5>
+                    </div>
+                    <div class="mb-5">
+                      <label for="provinsi" class="block mb-2 text-sm font-medium">Provinsi</label>
+                      <h5 type="provinsi" id="provinsi" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"><?= $data_diri['provinsi'] ?></h5>
+                    </div>
+                    <div class="mb-5">
+                      <label for="telepon" class="block mb-2 text-sm font-medium">Telepon</label>
+                      <h5 type="telepon" id="telepon" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"><?= $data_diri['telepon'] ?></h5>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="content text-dark">
+                <form class="max-w-sm mt-6 pb-2">
+                  <div class="grid-cols-2 w-[60rem] grid gap-x-20">
+                    <div class="mb-5">
+                      <label for="nama" class="block mb-2 text-sm font-medium">Nama ayah</label>
+                      <input id="nama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                    </div>
+                    <div class="mb-5">
+                      <label for="gender" class="block mb-2 text-sm font-medium">NIK ayah</label>
+                      <input type="gender" id="gender" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="tanggalLahir" class="block mb-2 text-sm font-medium">Pekerjaan ayah</label>
+                      <input type="tanggalLahir" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="alamat" class="block mb-2 text-sm font-medium">Telepon ayah</label>
+                      <input type="alamat" id="alamat" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="repeat-password" class="block mb-2 text-sm font-medium">Alamat ayah</label>
+                      <input type="password" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="password" class="block mb-2 text-sm font-medium">Usia</label>
+                      <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="tempatLahir" class="block mb-2 text-sm font-medium">Nama ibu</label>
+                      <input type="tempatLahir" id="tempatLahir" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="agama" class="block mb-2 text-sm font-medium">NIK ibu</label>
+                      <input type="agama" id="agama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="provinsi" class="block mb-2 text-sm font-medium">Pekerjaan ibu</label>
+                      <input type="provinsi" id="provinsi" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="telepon" class="block mb-2 text-sm font-medium">Telepon ibu</label>
+                      <input type="telepon" id="telepon" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="provinsi" class="block mb-2 text-sm font-medium">Alamat ibu</label>
+                      <input type="provinsi" id="provinsi" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="telepon" class="block mb-2 text-sm font-medium">Usia</label>
+                      <input type="telepon" id="telepon" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="content text-dark">
+                <form class="max-w-sm mt-6 pb-2">
+                  <div class="grid-cols-2 w-[60rem] grid gap-x-20">
+                    <div class="mb-5">
+                      <label for="nama" class="block mb-2 text-sm font-medium">Provinsi SMP</label>
+                      <input id="nama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="gender" class="block mb-2 text-sm font-medium">Kota/kabupaten SMP</label>
+                      <input type="gender" id="gender" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="tanggalLahir" class="block mb-2 text-sm font-medium">Asal SMP</label>
+                      <input type="tanggalLahir" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div class="mb-5">
+                      <label for="alamat" class="block mb-2 text-sm font-medium">Alamat SMP</label>
+                      <input type="alamat" id="alamat" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="content text-dark">
+                <div class="grid grid-cols-2 gap-8 pt-6 px-20">
+                  <div class="relative h-80 bg-white shadow-lg border rounded-xl">
+                    <h2 class="flex justify-center my-8 font-semibold">
+                      IJAZAH/SKL SMP
+                    </h2>
+                    <img class="w-[20rem] h-52 rounded-lg bottom-6 mx-[3.2rem] absolute" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="" onclick="openModal(this.src)" />
+                  </div>
+                  <div class="relative h-80 bg-white shadow-lg border rounded-xl">
+                    <h2 class="flex justify-center my-8 font-semibold">
+                      PAS FOTO
+                    </h2>
+                    <img class="w-[20rem] h-52 rounded-lg bottom-6 mx-[3.2rem] absolute" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="" onclick="openModal(this.src)" />
+                  </div>
+                  <div class="relative h-80 bg-white shadow-lg border rounded-xl">
+                    <h2 class="flex justify-center my-8 font-semibold">
+                      KARTU KELUARGA
+                    </h2>
+                    <img class="w-[20rem] h-52 rounded-lg bottom-6 mx-[3.2rem] absolute" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="" onclick="openModal(this.src)" />
+                  </div>
+                  <div class="relative h-80 bg-white shadow-lg border rounded-xl">
+                    <h2 class="flex justify-center my-8 font-semibold">
+                      AKTA KELAHIRAN
+                    </h2>
+                    <img class="w-[20rem] h-52 rounded-lg bottom-6 mx-[3.2rem] absolute" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="" onclick="openModal(this.src)" />
+                  </div>
+                  <div class="pb-6"></div>
+                </div>
+              </div>
             </div>
 
-            <div class="group">
-              <button id="myButton" onclick="changeColor()" type="button" class="px-3 py-2 h-10 text-xs font-medium text-center inline-flex items-center text-dark bg-dark bg-opacity-10 rounded-xl">
-                <svg id="myIcon" class="fill-dark" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path id="myPath" fill-rule="evenodd" clip-rule="evenodd" d="M18.0096 7.75789C18.4001 8.14841 18.4001 8.78158 18.0096 9.1721L10.9396 16.2421C10.7521 16.4296 10.4977 16.535 10.2325 16.535C9.96729 16.535 9.71294 16.4296 9.5254 16.2421L5.9904 12.7071C5.59988 12.3166 5.59988 11.6834 5.9904 11.2929C6.38093 10.9024 7.01409 10.9024 7.40462 11.2929L10.2325 14.1208L16.5954 7.75789C16.9859 7.36737 17.6191 7.36737 18.0096 7.75789Z" />
-                </svg>
-                <span id="myButtonText"> Terima </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+        <?php
 
-    <div class="container pt-6">
-      <div class="bg-white w-[68rem] shadow-lg rounded-xl">
-        <div class="flex font-semibold relative text-secondary gap-12 w-full py-4 px-6">
-          <button id="button" class="active">Data Diri Calon</button>
-          <button id="button">Data Orang Tua</button>
-          <button id="button">Asal Sekolah</button>
-          <button id="button">Berkas</button>
-          <div class="line absolute bg-blueFist rounded-full transition-all duration-300 ease-in-out"></div>
-        </div>
-        <hr class="pb-4 border-t-2 border-secondary opacity-25" />
-        <div class="contentBox px-6">
-          <div class="content text-dark active">
-            <form class="max-w-sm mt-6 pb-7">
-              <div class="grid-cols-2 w-[60rem] grid gap-x-20">
-                <div class="mb-5">
-                  <label for="nama" class="block mb-2 text-sm font-medium">Nama lengkap</label>
-                  <input id="nama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="gender" class="block mb-2 text-sm font-medium">Jenis kelamin</label>
-                  <input type="gender" id="gender" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="tanggalLahir" class="block mb-2 text-sm font-medium">Tanggal lahir</label>
-                  <input type="tanggalLahir" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="alamat" class="block mb-2 text-sm font-medium">Alamat</label>
-                  <input type="alamat" id="alamat" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="repeat-password" class="block mb-2 text-sm font-medium">Kota/kabupaten</label>
-                  <input type="password" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="password" class="block mb-2 text-sm font-medium">NISN</label>
-                  <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="tempatLahir" class="block mb-2 text-sm font-medium">Tempat lahir</label>
-                  <input type="tempatLahir" id="tempatLahir" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="agama" class="block mb-2 text-sm font-medium">Agama</label>
-                  <input type="agama" id="agama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="provinsi" class="block mb-2 text-sm font-medium">Provinsi</label>
-                  <input type="provinsi" id="provinsi" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="telepon" class="block mb-2 text-sm font-medium">Telepon</label>
-                  <input type="telepon" id="telepon" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="content text-dark">
-            <form class="max-w-sm mt-6 pb-2">
-              <div class="grid-cols-2 w-[60rem] grid gap-x-20">
-                <div class="mb-5">
-                  <label for="nama" class="block mb-2 text-sm font-medium">Nama ayah</label>
-                  <input id="nama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
-                </div>
-                <div class="mb-5">
-                  <label for="gender" class="block mb-2 text-sm font-medium">NIK ayah</label>
-                  <input type="gender" id="gender" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="tanggalLahir" class="block mb-2 text-sm font-medium">Pekerjaan ayah</label>
-                  <input type="tanggalLahir" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="alamat" class="block mb-2 text-sm font-medium">Telepon ayah</label>
-                  <input type="alamat" id="alamat" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="repeat-password" class="block mb-2 text-sm font-medium">Alamat ayah</label>
-                  <input type="password" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="password" class="block mb-2 text-sm font-medium">Usia</label>
-                  <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="tempatLahir" class="block mb-2 text-sm font-medium">Nama ibu</label>
-                  <input type="tempatLahir" id="tempatLahir" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="agama" class="block mb-2 text-sm font-medium">NIK ibu</label>
-                  <input type="agama" id="agama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="provinsi" class="block mb-2 text-sm font-medium">Pekerjaan ibu</label>
-                  <input type="provinsi" id="provinsi" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="telepon" class="block mb-2 text-sm font-medium">Telepon ibu</label>
-                  <input type="telepon" id="telepon" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="provinsi" class="block mb-2 text-sm font-medium">Alamat ibu</label>
-                  <input type="provinsi" id="provinsi" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="telepon" class="block mb-2 text-sm font-medium">Usia</label>
-                  <input type="telepon" id="telepon" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="content text-dark">
-            <form class="max-w-sm mt-6 pb-2">
-              <div class="grid-cols-2 w-[60rem] grid gap-x-20">
-                <div class="mb-5">
-                  <label for="nama" class="block mb-2 text-sm font-medium">Provinsi SMP</label>
-                  <input id="nama" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="gender" class="block mb-2 text-sm font-medium">Kota/kabupaten SMP</label>
-                  <input type="gender" id="gender" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="tanggalLahir" class="block mb-2 text-sm font-medium">Asal SMP</label>
-                  <input type="tanggalLahir" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-                <div class="mb-5">
-                  <label for="alamat" class="block mb-2 text-sm font-medium">Alamat SMP</label>
-                  <input type="alamat" id="alamat" class="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="content text-dark">
-            <div class="grid grid-cols-2 gap-8 pt-6 px-20">
-              <div class="relative h-80 bg-white shadow-lg border rounded-xl">
-                <h2 class="flex justify-center my-8 font-semibold">
-                  IJAZAH/SKL SMP
-                </h2>
-                <img class="w-[20rem] h-52 rounded-lg bottom-6 mx-[3.2rem] absolute" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="" onclick="openModal(this.src)" />
-              </div>
-              <div class="relative h-80 bg-white shadow-lg border rounded-xl">
-                <h2 class="flex justify-center my-8 font-semibold">
-                  PAS FOTO
-                </h2>
-                <img class="w-[20rem] h-52 rounded-lg bottom-6 mx-[3.2rem] absolute" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="" onclick="openModal(this.src)" />
-              </div>
-              <div class="relative h-80 bg-white shadow-lg border rounded-xl">
-                <h2 class="flex justify-center my-8 font-semibold">
-                  KARTU KELUARGA
-                </h2>
-                <img class="w-[20rem] h-52 rounded-lg bottom-6 mx-[3.2rem] absolute" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="" onclick="openModal(this.src)" />
-              </div>
-              <div class="relative h-80 bg-white shadow-lg border rounded-xl">
-                <h2 class="flex justify-center my-8 font-semibold">
-                  AKTA KELAHIRAN
-                </h2>
-                <img class="w-[20rem] h-52 rounded-lg bottom-6 mx-[3.2rem] absolute" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="" onclick="openModal(this.src)" />
-              </div>
-              <div class="pb-6"></div>
-            </div>
-          </div>
-        </div>
+
+      }
+    }
+        ?>
+
+
+
 
         <!-- overlay untuk gambar besar -->
         <div id="myModal" class="modal">
           <span class="close" onclick="closeModal()">&times;</span>
           <img class="modal-content" src="" id="img01" alt="" />
         </div>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <!-- konten -->
+        <!-- konten -->
   </main>
 
   <script>
